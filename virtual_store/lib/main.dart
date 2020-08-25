@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_store/models/user_manager.dart';
 import 'package:virtual_store/screens/base/base_screen.dart';
+import 'package:virtual_store/screens/signup/signup_screen.dart';
 
 void main() async {
   runApp(MyApp());
@@ -56,7 +57,23 @@ class MyApp extends StatelessWidget {
           //primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: BaseScreen(),
+        //home: BaseScreen(),
+        initialRoute: '/base',
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case '/base':
+              return MaterialPageRoute(
+                builder: (_)=> BaseScreen());
+              
+            case '/signup':
+              return MaterialPageRoute(
+                builder: (_)=> SignUpScreen());
+              
+            default:
+              return MaterialPageRoute(
+                builder: (_)=> BaseScreen());
+          }
+        },
       ),
     );
   }
