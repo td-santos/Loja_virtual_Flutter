@@ -29,17 +29,17 @@ class SignUpScreen extends StatelessWidget {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(hintText: 'Nome Completo'),
-                  validator: (nome){
-                    if(nome.isEmpty){
+                  validator: (name){
+                    if(name.isEmpty){
                       return 'Campo obrigatório';
-                    }else if(nome.trim().split(' ').length <= 1){
+                    }else if(name.trim().split(' ').length <= 1){
                       return 'Insira seu nome Completo';
                     }else{
                       return null;
                     }
                   },
-                  onSaved: (nome){
-                    user.nome = nome;
+                  onSaved: (name){
+                    user.name = name;
                   },
                 ),
                 SizedBox(height: 16),
