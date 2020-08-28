@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_store/models/user_manager.dart';
 import 'package:virtual_store/screens/base/base_screen.dart';
+import 'package:virtual_store/screens/login/login_screen.dart';
 import 'package:virtual_store/screens/signup/signup_screen.dart';
 
 void main() async {
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
+      lazy: false,
       create: (_) => UserManager(),
       child: MaterialApp(
         title: 'Loja Virtual',
@@ -64,6 +66,10 @@ class MyApp extends StatelessWidget {
             case '/base':
               return MaterialPageRoute(
                 builder: (_)=> BaseScreen());
+
+            case '/login':
+              return MaterialPageRoute(
+                builder: (_)=> LoginScreen());
               
             case '/signup':
               return MaterialPageRoute(
