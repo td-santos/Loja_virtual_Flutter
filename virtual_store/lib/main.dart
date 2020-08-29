@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtual_store/models/product.dart';
+import 'package:virtual_store/models/product_manager.dart';
 import 'package:virtual_store/models/user_manager.dart';
 import 'package:virtual_store/screens/base/base_screen.dart';
 import 'package:virtual_store/screens/login/login_screen.dart';
+import 'package:virtual_store/screens/product_detail/product_screen.dart';
 import 'package:virtual_store/screens/signup/signup_screen.dart';
 
 void main() async {
@@ -46,9 +49,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      lazy: false,
-      create: (_) => UserManager(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_)=> UserManager(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_)=> ProductManager(),
+          lazy: false,
+        )
+      ],
       child: MaterialApp(
         title: 'Loja Virtual',
         debugShowCheckedModeBanner: false,
@@ -64,20 +75,19 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case '/base':
-              return MaterialPageRoute(
-                builder: (_)=> BaseScreen());
+              return MaterialPageRoute(builder: (_) => BaseScreen());
 
             case '/login':
-              return MaterialPageRoute(
-                builder: (_)=> LoginScreen());
-              
-            case '/signup':
-              return MaterialPageRoute(
-                builder: (_)=> SignUpScreen());
-              
+              return MaterialPageRoute(builder: (_) => LoginScreen());
+
+            case '/product':
+              return MaterialPageRoute(builder: (_) => ProductScreen(product: settings.arguments as Product,));
+
+            case '/base':
+              return MaterialPageRoute(builder: (_) => BaseScreen());
+
             default:
-              return MaterialPageRoute(
-                builder: (_)=> BaseScreen());
+              return MaterialPageRoute(builder: (_) => BaseScreen());
           }
         },
       ),

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:virtual_store/common/custom_drawer/custom_drawer.dart';
 import 'package:virtual_store/models/page_manager.dart';
 import 'package:virtual_store/screens/login/login_screen.dart';
+import 'package:virtual_store/screens/products/products_screen.dart';
 
 class BaseScreen extends StatelessWidget {
 
@@ -22,12 +23,7 @@ class BaseScreen extends StatelessWidget {
             ),
             drawer: CustomDrawer(),
           ),
-          Scaffold(
-            appBar: AppBar(
-              title: Text('Home2'),
-            ),
-            drawer: CustomDrawer(),
-          ),
+          ProductsScreen(),
           Scaffold(
             appBar: AppBar(
               title: Text('Home3'),
