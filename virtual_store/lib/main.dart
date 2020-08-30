@@ -83,8 +83,8 @@ class MyApp extends StatelessWidget {
             case '/product':
               return MaterialPageRoute(builder: (_) => ProductScreen(product: settings.arguments as Product,));
 
-            case '/base':
-              return MaterialPageRoute(builder: (_) => BaseScreen());
+            case '/signup':
+              return MaterialPageRoute(builder: (_) => SignUpScreen());
 
             default:
               return MaterialPageRoute(builder: (_) => BaseScreen());
