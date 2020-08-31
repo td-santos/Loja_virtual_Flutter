@@ -45,8 +45,9 @@ class Product extends ChangeNotifier{
      return sizes.firstWhere((s) => s.name == name);
     }catch(e){
       return null;
-    }
-     
+    }     
   }
+
+  
 
 }
