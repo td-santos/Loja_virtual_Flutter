@@ -16,6 +16,7 @@ class User{
   }
 
   DocumentReference get firetoreRef => Firestore.instance.document('users/$id');
+  CollectionReference get cartRef => firetoreRef.collection('cart');
 
   Future<void> saveData()async{
     //await Firestore.instance.collection('users').document(id).setData(toMap());

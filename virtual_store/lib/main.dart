@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtual_store/models/cart_manager.dart';
 import 'package:virtual_store/models/product.dart';
 import 'package:virtual_store/models/product_manager.dart';
 import 'package:virtual_store/models/user_manager.dart';
 import 'package:virtual_store/screens/base/base_screen.dart';
+import 'package:virtual_store/screens/cart/cart_screen.dart';
 import 'package:virtual_store/screens/login/login_screen.dart';
 import 'package:virtual_store/screens/product_detail/product_screen.dart';
 import 'package:virtual_store/screens/signup/signup_screen.dart';
@@ -58,6 +60,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_)=> ProductManager(),
           lazy: false,
+        ),
+        ProxyProvider<UserManager, CartManager>(
+          create: (_)=> CartManager(),
+          update: (_,userManager, cartManager)=> cartManager..updateUser(userManager),
+          lazy: false,
         )
       ],
       child: MaterialApp(
@@ -85,6 +92,9 @@ class MyApp extends StatelessWidget {
 
             case '/signup':
               return MaterialPageRoute(builder: (_) => SignUpScreen());
+
+            case '/cart':
+              return MaterialPageRoute(builder: (_) => CartScreen());
 
             default:
               return MaterialPageRoute(builder: (_) => BaseScreen());

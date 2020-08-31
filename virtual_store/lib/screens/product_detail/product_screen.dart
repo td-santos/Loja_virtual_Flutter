@@ -1,6 +1,7 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtual_store/models/cart_manager.dart';
 import 'package:virtual_store/models/product.dart';
 import 'package:virtual_store/models/user_manager.dart';
 import 'package:virtual_store/screens/product_detail/components/size_widget.dart';
@@ -99,7 +100,8 @@ class ProductScreen extends StatelessWidget {
                               : 'Entre para Comprar', style: TextStyle(fontSize: 18),),
                               onPressed: product.selectedSize != null ?(){
                                 if(userManager.isLoggedIn){
-                                  // TODO ADD CARRINHO
+                                  context.read<CartManager>().addToCart(product);
+                                  Navigator.of(context).pushNamed('/cart');
                                 }else{
                                   Navigator.of(context).pushNamed('/login');
                                 }
