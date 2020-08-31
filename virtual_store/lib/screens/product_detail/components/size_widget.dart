@@ -30,15 +30,21 @@ class SizeWidget extends StatelessWidget {
         },
         child: Container(
         decoration: BoxDecoration(
-          border: Border.all(
-              color: color),
+          border: Border.all(color: color),
+          borderRadius: BorderRadius.circular(10)
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.symmetric(vertical: 4,horizontal: 8),
-              color: color,
+              padding: EdgeInsets.symmetric(vertical: 4,horizontal: 8),              
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10)
+                )
+              ),
               child: Text(size.name,style: TextStyle(
                 color: Colors.white
               ),),

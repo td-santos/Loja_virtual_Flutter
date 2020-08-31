@@ -93,6 +93,7 @@ class ProductScreen extends StatelessWidget {
                           return SizedBox(
                             height: 44,
                             child: RaisedButton(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                               color: primaryColor,
                               textColor: Colors.white,
                               child: Text(userManager.isLoggedIn 

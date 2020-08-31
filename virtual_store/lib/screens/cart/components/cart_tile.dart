@@ -41,11 +41,22 @@ class CartTile extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.w300),
                       ),
                     ),
-                    Text('R\$ ${cartProduct.unitPrice.toStringAsFixed(2)}',
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                    Consumer<CartProduct>(
+                      builder: (_, cartProduct, __) {
+                        if (cartProduct.hasStock) {
+                          return Text('R\$ ${cartProduct.unitPrice.toStringAsFixed(2)}',
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          );
+                        } else {
+                          return Text('Sem estoque disponível',style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 12
+                          ),);
+                        }
+                      },
                     )
                   ],
                 ),
@@ -61,15 +72,16 @@ class CartTile extends StatelessWidget {
                           cartProduct.increment();
                         },
                       ),
-                      Text('${cartProduct.quantity}',
+                      Text(
+                        '${cartProduct.quantity}',
                         style: TextStyle(fontSize: 20),
                       ),
                       CustomIconButtom(
                         iconData: Icons.remove,
                         color: cartProduct.quantity > 1
-                        ? Theme.of(context).primaryColor
-                        : Colors.red[300],
-                        ontap: cartProduct.decrement ,
+                            ? Theme.of(context).primaryColor
+                            : Colors.red[300],
+                        ontap: cartProduct.decrement,
                       ),
                     ],
                   );
