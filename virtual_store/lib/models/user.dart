@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User{
+
   String id;
   String name;  
   String email;
   String senha;
   String confirmSenha;
+  bool admin;
 
   User({this.id, this.name, this.email,this.senha, this.confirmSenha});
 
