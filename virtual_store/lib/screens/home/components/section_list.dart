@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:virtual_store/models/section.dart';
+import 'package:virtual_store/screens/home/components/item_tile.dart';
 import 'package:virtual_store/screens/home/components/section_header.dart';
 
 class SectionList extends StatelessWidget {
@@ -23,14 +24,9 @@ class SectionList extends StatelessWidget {
               itemCount: section.items.length,
               separatorBuilder: (_,__)=> SizedBox(width: 4,),
               itemBuilder: (_, index){
-                return AspectRatio(
-                  aspectRatio: 1,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                    child: Image.network(section.items[index].image,fit: BoxFit.cover,)));
+                return ItemTile(
+                  item: section.items[index],
+                );
               },
             )
           )

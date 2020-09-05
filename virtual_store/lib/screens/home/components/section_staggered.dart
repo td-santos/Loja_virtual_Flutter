@@ -3,6 +3,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:virtual_store/models/section.dart';
 import 'package:virtual_store/screens/home/components/section_header.dart';
 
+import 'item_tile.dart';
+
 class SectionStaggered extends StatelessWidget{
   
   final Section section;
@@ -25,9 +27,9 @@ class SectionStaggered extends StatelessWidget{
             crossAxisSpacing: 4,
             itemCount: section.items.length,
             itemBuilder: (_,index){
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.network(section.items[index].image, fit: BoxFit.cover,));
+              return ItemTile(
+                item: section.items[index]
+              );
             }, 
             staggeredTileBuilder: (index)=> StaggeredTile.count(
               2, index.isEven ? 2 : 1)
