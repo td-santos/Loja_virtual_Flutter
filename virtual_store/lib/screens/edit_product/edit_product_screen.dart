@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:virtual_store/models/product.dart';
 
+import 'components/images_form.dart';
+
 class EditProductScreen extends StatelessWidget {
 
   final Product product;
 
   const EditProductScreen({Key key, this.product}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +16,12 @@ class EditProductScreen extends StatelessWidget {
         title: Text('Editar Anuncio'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Text(product.name),
-      ),
+      body: ListView(
+        children: <Widget>[
+          ImagesForm(product: product,),
+        ],
+      )
+      
     );
   }
 }
