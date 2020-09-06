@@ -17,11 +17,27 @@ class ImagesForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final primaryColor = Theme.of(context).primaryColor;
+    
     return FormField<List<dynamic>>(
-      initialValue: product.images,
+      initialValue: List.from(product.images),
+      validator: (images){
+        if(images.isEmpty){
+          return 'Ensira ao menos uma imagem!';
+        }else{
+          return null;
+        }
+      },
       builder: (state){
-        return AspectRatio(
+        void onImageSelected (File file){
+          state.value.add(file);
+          state.didChange(state.value);
+          Navigator.of(context).pop();
+        }
+        return Column(
+          children: <Widget>[
+            AspectRatio(
               aspectRatio: 1,
               child: Carousel(
                 dotSize: 6,
@@ -61,12 +77,16 @@ class ImagesForm extends StatelessWidget {
                         if(Platform.isAndroid){
                           showModalBottomSheet(
                             context: context, 
-                            builder: (_)=> ImageSourceSheet()
+                            builder: (_)=> ImageSourceSheet(
+                              onImageSelected: onImageSelected,
+                            )
                           );
                         }else if(Platform.isIOS){
                           showCupertinoModalPopup(
                             context: context, 
-                            builder: (_)=> ImageSourceSheet()
+                            builder: (_)=> ImageSourceSheet(
+                              onImageSelected: onImageSelected,
+                            )
                           );
                         }
                         
@@ -74,7 +94,19 @@ class ImagesForm extends StatelessWidget {
                   )
                 ),
               ),
-            );
+            ),
+            if(state.hasError)
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.only(left: 16,right: 16),
+                child: Text(state.errorText, style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 12
+                ),),
+              )
+            
+          ],
+        );
       },
     );
   }

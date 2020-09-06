@@ -41,5 +41,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Acessar Galeria para buscar Imagem</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Acessar Camera para adicionar Imagem</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Acessar Cmera para adicionar Imagem</string>
 </dict>
 </plist>

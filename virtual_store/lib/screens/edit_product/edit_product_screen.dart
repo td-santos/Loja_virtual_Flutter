@@ -4,24 +4,38 @@ import 'package:virtual_store/models/product.dart';
 import 'components/images_form.dart';
 
 class EditProductScreen extends StatelessWidget {
-
   final Product product;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  const EditProductScreen({Key key, this.product}) : super(key: key);
+  EditProductScreen({Key key, this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Editar Anuncio'),
-        centerTitle: true,
-      ),
-      body: ListView(
-        children: <Widget>[
-          ImagesForm(product: product,),
-        ],
-      )
-      
-    );
+      backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text('Editar Anuncio'),
+          centerTitle: true,
+        ),
+        body: Form(
+          key: formKey,
+          child: ListView(
+            children: <Widget>[
+              ImagesForm(
+                product: product,
+              ),
+              RaisedButton(
+                onPressed: (){
+                  if(formKey.currentState.validate()){
+                    print('valido');
+                  }else{
+                    print('invalido');
+                  }
+                },
+                child: Text('Salvar'),
+              )
+            ],
+          ),
+        ));
   }
 }
