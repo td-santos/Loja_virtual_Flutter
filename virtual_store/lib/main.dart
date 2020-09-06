@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtual_store/models/admin_users_manager.dart';
 import 'package:virtual_store/models/cart_manager.dart';
 import 'package:virtual_store/models/home_manager.dart';
 import 'package:virtual_store/models/product.dart';
@@ -8,6 +9,7 @@ import 'package:virtual_store/models/product_manager.dart';
 import 'package:virtual_store/models/user_manager.dart';
 import 'package:virtual_store/screens/base/base_screen.dart';
 import 'package:virtual_store/screens/cart/cart_screen.dart';
+import 'package:virtual_store/screens/edit_product/edit_product_screen.dart';
 import 'package:virtual_store/screens/login/login_screen.dart';
 import 'package:virtual_store/screens/product_detail/product_screen.dart';
 import 'package:virtual_store/screens/signup/signup_screen.dart';
@@ -71,6 +73,11 @@ class MyApp extends StatelessWidget {
           update: (_,userManager, cartManager)=> cartManager..updateUser(userManager),
           lazy: false,
         ),
+        ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
+          create: (_)=> AdminUsersManager(),
+          update: (_, userManager,adminUsersManager) => adminUsersManager..updateUser(userManager),
+          lazy: false,
+        )
       ],
       child: MaterialApp(
         title: 'Loja Virtual',
@@ -85,11 +92,11 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         //home: BaseScreen(),
-        initialRoute: '/base',
+        //initialRoute: '/base',
         onGenerateRoute: (settings) {
           switch (settings.name) {
-            case '/base':
-              return MaterialPageRoute(builder: (_) => BaseScreen());
+            //case '/base':
+            //  return MaterialPageRoute(builder: (_) => BaseScreen());
 
             case '/login':
               return MaterialPageRoute(builder: (_) => LoginScreen());
@@ -102,6 +109,9 @@ class MyApp extends StatelessWidget {
 
             case '/cart':
               return MaterialPageRoute(builder: (_) => CartScreen());
+
+            case '/edit_product':
+              return MaterialPageRoute(builder: (_) => EditProductScreen(product: settings.arguments as Product,));
 
             default:
               return MaterialPageRoute(builder: (_) => BaseScreen());
