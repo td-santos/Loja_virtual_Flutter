@@ -11,8 +11,9 @@ class EditProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
-      backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text('Editar Anuncio'),
           centerTitle: true,
@@ -24,15 +25,76 @@ class EditProductScreen extends StatelessWidget {
               ImagesForm(
                 product: product,
               ),
-              RaisedButton(
-                onPressed: (){
-                  if(formKey.currentState.validate()){
-                    print('valido');
-                  }else{
-                    print('invalido');
-                  }
-                },
-                child: Text('Salvar'),
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    TextFormField(
+                      initialValue: product.name,
+                      decoration: InputDecoration(
+                        hintText: 'Título',
+                        border: InputBorder.none,
+                      ),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                      validator: (name) {
+                        if (name.length < 6) {
+                          return 'Título muito curto!';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    Text(
+                      'A partir de',
+                      style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                    ),
+                    Text(
+                      'R\$ ...',
+                      style: TextStyle(
+                          fontSize: 22,
+                          color: primaryColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 16, bottom: 0),
+                      child: Text(
+                        'Descrição',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    TextFormField(
+                      initialValue: product.description,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        hintText: 'Descreva o produto',
+                        border: InputBorder.none,
+                      ),
+                      style: TextStyle(
+                        fontSize: 16,                        
+                      ),
+                      validator: (description){
+                        if(description.length < 10){
+                          return 'Descrição muito curta!';
+                        }else{
+                          return null;
+                        }
+                      },
+                    ),
+                    RaisedButton(
+                      onPressed: () {
+                        if (formKey.currentState.validate()) {
+                          print('valido');
+                        } else {
+                          print('invalido');
+                        }
+                      },
+                      child: Text('Salvar'),
+                    )
+                  ],
+                ),
               )
             ],
           ),
