@@ -12,6 +12,7 @@ class ItemSize{
     stock = map['stock'] as int;
 
   }
+  ItemSize();
 
   String toString(){
     return 'ItemSize{name: $name, price: $price, stock: $stock}';
