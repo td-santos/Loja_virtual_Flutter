@@ -23,6 +23,14 @@ class EditItemSize extends StatelessWidget {
               labelText: 'Título',
               isDense: true
             ),
+            onChanged: (name)=> size.name = name,
+            validator: (nome){
+              if(nome.isEmpty){
+                return 'Inválido';
+              }else{
+                return null;
+              }
+            },
           ),
         ),
         SizedBox(width: 4,),
@@ -35,6 +43,14 @@ class EditItemSize extends StatelessWidget {
               labelText: 'Estoque',
               isDense: true
             ),
+            onChanged: (stock)=> size.stock = int.tryParse(stock),
+            validator: (stock){
+              if(int.tryParse(stock)== null){
+                return 'Inválido';
+              }else{
+                return null;
+              }
+            },
           ),
         ),
         SizedBox(width: 4,),
@@ -50,6 +66,14 @@ class EditItemSize extends StatelessWidget {
               isDense: true,
               prefixText: 'R\$ '
             ),
+            onChanged: (price)=> size.price = num.tryParse(price),
+            validator: (price){
+              if(num.tryParse(price)== null){
+                return 'Inválido';
+              }else{
+                return null;
+              }
+            },
           ),
         ),
         CustomIconButtom(
