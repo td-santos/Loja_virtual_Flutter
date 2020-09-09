@@ -12,7 +12,15 @@ class ItemSize{
     stock = map['stock'] as int;
 
   }
-  ItemSize();
+  ItemSize({this.name,this.price,this.stock});
+
+  ItemSize clone(){
+    return ItemSize(
+      name: name,
+      price: price,
+      stock: stock
+    );
+  }
 
   String toString(){
     return 'ItemSize{name: $name, price: $price, stock: $stock}';

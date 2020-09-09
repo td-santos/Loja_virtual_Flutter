@@ -7,8 +7,10 @@ import 'components/sizes_form.dart';
 class EditProductScreen extends StatelessWidget {
   final Product product;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  EditProductScreen({Key key, this.product}) : super(key: key);
+  final bool editing;
+  EditProductScreen(Product p) : 
+    editing = p != null,
+    product = p != null ? p.clone() :Product();
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class EditProductScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Editar Anuncio'),
+          title: Text(editing ?'Editar Produto': 'Criar Produto'),
           centerTitle: true,
         ),
         body: Form(
@@ -85,16 +87,27 @@ class EditProductScreen extends StatelessWidget {
                       },
                     ),
                     SizesForm(product: product,),
-                    RaisedButton(
-                      onPressed: () {
-                        if (formKey.currentState.validate()) {
-                          print('valido');
-                        } else {
-                          print('invalido');
-                        }
-                      },
-                      child: Text('Salvar'),
-                    )
+                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 44,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        onPressed: () {
+                          if (formKey.currentState.validate()) {
+                            print('valido');
+                          } else {
+                            print('invalido');
+                          }
+                        },
+                        color: primaryColor,
+                        disabledColor: primaryColor.withAlpha(100),
+                        textColor: Colors.white,
+                        child: Text('Salvar',style: TextStyle(
+                          fontSize: 18,
+                        ),),
+                      ),
+                    ),
+                    SizedBox(height: 44,)
                   ],
                 ),
               )
