@@ -16,9 +16,10 @@ class CustomDrawerHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Text(
-                'Loja do \nThiago',
+                'Loja  \nVirtual',
                 style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
               ),
+              SizedBox(height: 15,),
               Text('Olá ${userManager.user?.name ?? ''}',
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
@@ -27,6 +28,7 @@ class CustomDrawerHeader extends StatelessWidget {
                   fontWeight: FontWeight.bold
                 ),
               ),
+              SizedBox(height: 5,),
               GestureDetector(
                 onTap: (){
                   if(userManager.isLoggedIn){

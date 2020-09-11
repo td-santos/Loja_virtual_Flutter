@@ -21,13 +21,16 @@ class ImagesForm extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     
     return FormField<List<dynamic>>(
-      initialValue: product.images,
+      initialValue: List.from(product.images),
       validator: (images){
         if(images.isEmpty){
           return 'Ensira ao menos uma imagem!';
         }else{
           return null;
         }
+      },
+      onSaved: (images){
+        product.newImages = images;
       },
       builder: (state){
         void onImageSelected (File file){

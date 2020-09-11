@@ -84,8 +84,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           //primaryColor: Color.fromARGB(255, 4, 125, 141),
-          primaryColor: Colors.blue[600],
-          scaffoldBackgroundColor: Colors.blue[600],
+          primaryColor: Colors.grey[850],
+          scaffoldBackgroundColor: Colors.grey[850],
           //scaffoldBackgroundColor: Color.fromARGB(255, 4, 125, 141),
           appBarTheme: AppBarTheme(elevation: 0),
           primarySwatch: Colors.blue,
