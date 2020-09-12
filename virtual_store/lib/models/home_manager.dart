@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 class HomeManager extends ChangeNotifier{
 
   Firestore firestore = Firestore.instance;
-  List<Section> sections = [];
+  List<Section> _sections = [];
+  List<Section> _editingSections =[];
+  bool editing = false;
 
   HomeManager() {
     _loadSections();
@@ -14,11 +16,45 @@ class HomeManager extends ChangeNotifier{
 
   Future<void> _loadSections() async {
     firestore.collection('home').snapshots().listen((snapshot) {
-      sections.clear();
+      _sections.clear();
       for (final DocumentSnapshot document in snapshot.documents) {
-        sections.add(Section.fromDocument(document));
+        _sections.add(Section.fromDocument(document));
       }
       notifyListeners();
     });
+  }
+
+  List<Section> get sections{
+    if(editing){
+      return _editingSections;
+    }else{
+      return _sections;
+    }
+  }
+
+  void addSection(Section section){
+    _editingSections.add(section);
+    notifyListeners();
+  }
+
+  void removeSection(Section section){
+    _editingSections.remove(section);
+    notifyListeners();
+  }
+
+  void enterEditing(){
+    editing = true;
+    _editingSections =_sections.map((s) => s.clone()).toList();
+    notifyListeners();
+  }
+
+  void saveEditing(){
+    editing = false;
+    notifyListeners();
+  }
+
+  void discardEditing(){
+    editing = false;
+    notifyListeners();
   }
 }
