@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:virtual_store/models/section_item.dart';
 
-class Section{
+class Section extends ChangeNotifier{
 
   String name;
   String type;
@@ -24,6 +25,11 @@ class Section{
       type: type,
       items: items.map((e) => e.clone()).toList()
     );
+  }
+
+  void addItem(SectionItem item){
+    items.add(item);
+    notifyListeners();
   }
 
   String toString(){
