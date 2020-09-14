@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:virtual_store/models/home_manager.dart';
 import 'package:virtual_store/models/product_manager.dart';
+import 'package:virtual_store/models/section.dart';
 import 'package:virtual_store/models/section_item.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +15,9 @@ class ItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final homeManager = context.watch<HomeManager>();
+
     return GestureDetector(
       onTap: (){
         if(item.product != null){
@@ -22,6 +27,25 @@ class ItemTile extends StatelessWidget {
           }
         }
       },
+      onLongPress:homeManager.editing ? (){
+        showDialog(
+          context: context,
+          builder: (_){
+            return AlertDialog(
+              title: Text('Editar Item'),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: (){
+                    context.read<Section>().removeItem(item);
+                    Navigator.of(context).pop();
+                  }, 
+                  textColor: Colors.red,
+                  child: Text('Excluir'))
+              ],
+            );
+          }
+        );
+      }: null,
       child: AspectRatio(
         aspectRatio: 1,
         child: item.image is String
