@@ -12,6 +12,7 @@ import 'package:virtual_store/screens/cart/cart_screen.dart';
 import 'package:virtual_store/screens/edit_product/edit_product_screen.dart';
 import 'package:virtual_store/screens/login/login_screen.dart';
 import 'package:virtual_store/screens/product_detail/product_screen.dart';
+import 'package:virtual_store/screens/select_product/select_product_screen.dart';
 import 'package:virtual_store/screens/signup/signup_screen.dart';
 
 void main() async {
@@ -109,6 +110,9 @@ class MyApp extends StatelessWidget {
 
             case '/cart':
               return MaterialPageRoute(builder: (_) => CartScreen());
+
+            case '/select_product':
+              return MaterialPageRoute(builder: (_) => SelectProductScreen());
 
             case '/edit_product':
               return MaterialPageRoute(builder: (_) => EditProductScreen(settings.arguments as Product,));
