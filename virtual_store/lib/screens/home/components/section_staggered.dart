@@ -25,11 +25,12 @@ class SectionStaggered extends StatelessWidget{
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SectionHeader(section: section),
+            SectionHeader(),
             Consumer<Section>(
               builder: (_,section,__){
                 return StaggeredGridView.countBuilder(
               padding: EdgeInsets.zero,
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               crossAxisCount: 4, 
               mainAxisSpacing: 4,

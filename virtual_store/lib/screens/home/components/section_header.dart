@@ -5,36 +5,51 @@ import 'package:virtual_store/models/section.dart';
 import 'package:provider/provider.dart';
 
 class SectionHeader extends StatelessWidget {
-  final Section section;
+  //final Section section;
 
-  const SectionHeader({Key key, this.section}) : super(key: key);
+  //const SectionHeader({Key key, this.section}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final homeManager = context.watch<HomeManager>();
+    final section = context.watch<Section>();
 
     if (homeManager.editing) {
-      return Row(
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Expanded(
-            child: TextFormField(
-              initialValue: section.name,
-              decoration: InputDecoration(
-                  hintText: 'Título', isDense: true, border: InputBorder.none),
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w800),
-              onChanged: (text) => section.name = text,
-            ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: TextFormField(
+                  initialValue: section.name,
+                  decoration: InputDecoration(
+                      hintText: 'Título',
+                      isDense: true,
+                      border: InputBorder.none),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800),
+                  onChanged: (text) => section.name = text,
+                ),
+              ),
+              CustomIconButtom(
+                iconData: Icons.remove,
+                color: Colors.white,
+                ontap: () {
+                  homeManager.removeSection(section);
+                },
+              )
+            ],
           ),
-          CustomIconButtom(
-            iconData: Icons.remove,
-            color: Colors.white,
-            ontap: () {
-              homeManager.removeSection(section);
-            },
-          )
+          if(section.error != null)
+            Padding(
+              padding: EdgeInsets.only(bottom: 8),
+              child: Text(section.error, style: TextStyle(
+                color: Colors.red
+              ),),
+            )
         ],
       );
     } else {

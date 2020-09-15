@@ -26,7 +26,7 @@ class SectionList extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SectionHeader(section: section),
+            SectionHeader(),
             SizedBox(
               height: 150,
               child: Consumer<Section>(
