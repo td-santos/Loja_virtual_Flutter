@@ -1,12 +1,24 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:virtual_store/models/section_item.dart';
 
 class Section extends ChangeNotifier{
 
+  String id;
   String name;
   String type;
   List<SectionItem> items =[];
+  List<SectionItem> originalItems =[];
+
+  final Firestore firestore = Firestore.instance;
+  DocumentReference get firestoreRef => firestore.document('home/$id');
+
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  StorageReference get storageRef => storage.ref().child('home').child(id);
 
   String _error;
   String get error => _error;
@@ -15,12 +27,14 @@ class Section extends ChangeNotifier{
     notifyListeners();
   }
 
-  Section({this.name, this.type, this.items}){
+  Section({this.id,this.name, this.type, this.items}){
     items = items ?? [];
-    name = name ?? '';
+    originalItems = List.from(items);
+    //name = name ?? '';
   }
 
   Section.fromDocument(DocumentSnapshot document){
+    id = document.documentID;
     name = document.data['name'] as String;
     type = document.data['type'] as String;
     items = (document.data['items']as List).map((i) => SectionItem.fromMap(i as Map<String,dynamic>)).toList();
@@ -28,6 +42,7 @@ class Section extends ChangeNotifier{
 
   Section clone(){
     return Section(
+      id: id,
       name: name,
       type: type,
       items: items.map((e) => e.clone()).toList()
@@ -54,6 +69,49 @@ class Section extends ChangeNotifier{
     }
     
     return error == null;
+  }
+
+  Future<void> save()async{
+    final Map<String,dynamic> data ={
+      'name': name,
+      'type' : type,
+    };
+
+    if(id == null){
+     final doc = await firestore.collection('home').add(data);
+     id =doc.documentID;
+    }else{
+      await firestoreRef.updateData(data);
+    }
+
+    for(final item in items){
+      if(item.image is File){
+        final StorageUploadTask task = storageRef.child(Uuid().v1()).putFile(item.image as File);
+        final StorageTaskSnapshot  snapshot = await task.onComplete;
+        final String url = await snapshot.ref.getDownloadURL() as String;
+        item.image = url;
+      }
+    }
+
+
+    for(final original in originalItems){
+      if(!items.contains(original)){
+        try{
+          final ref = await storage.getReferenceFromUrl(original.image as String);
+          await ref.delete();
+        }catch (e){}
+        
+      }
+    }
+    
+    final Map<String,dynamic> itemsData ={
+      'items': items.map((e) => e.toMap()).toList()
+    };
+
+    await firestoreRef.updateData(itemsData);
+
+
+
   }
 
   String toString(){

@@ -10,6 +10,13 @@ class SectionItem{
     product = map['product'] as String;
   }
 
+  Map<String,dynamic> toMap(){
+    return{
+      'image': image,
+      'product': product
+    };
+  }
+
   SectionItem clone(){
     return SectionItem(
       image: image,

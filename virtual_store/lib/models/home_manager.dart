@@ -48,7 +48,7 @@ class HomeManager extends ChangeNotifier{
     notifyListeners();
   }
 
-  void saveEditing(){
+  Future<void> saveEditing()async{
 
     bool valid =true;
     for(final section in _editingSections){
@@ -57,9 +57,11 @@ class HomeManager extends ChangeNotifier{
 
     if(!valid) return;
     
-    //@TODO: SALVAMENTO
-    //editing = false;
-    //notifyListeners();
+    for(final section in _editingSections){
+      await section.save();
+    }
+    editing = false;
+    notifyListeners();
   }
 
   void discardEditing(){
