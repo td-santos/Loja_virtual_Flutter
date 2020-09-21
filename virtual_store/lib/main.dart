@@ -18,8 +18,7 @@ import 'package:virtual_store/screens/signup/signup_screen.dart';
 import 'package:virtual_store/services/cep_aberto_service.dart';
 
 void main() async {
-  runApp(MyApp());
-  CepAbertoService().getAdressFromCep('21.031-460').then((address) => print(address));
+  runApp(MyApp()); 
 
   //.add -> id unico no firebase
   //Firestore.instance.collection('pedidos').add({"preco": 199.99,"user": "Thiago"});

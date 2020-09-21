@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:virtual_store/models/product.dart';
 import 'package:virtual_store/models/user.dart';
 import 'package:virtual_store/models/user_manager.dart';
+import 'package:virtual_store/services/cep_aberto_service.dart';
 
 import 'cart_product.dart';
 
@@ -86,5 +87,23 @@ class CartManager extends ChangeNotifier{
         
       }
       return true;
+    }
+
+
+    // ADDRESS
+
+    Future<void> getAddress(String cep)async{
+      final cepAbertoService = CepAbertoService();
+
+      try{
+
+        final address = await cepAbertoService.getAdressFromCep(cep);
+
+        print(address);
+
+      }catch (e){
+        debugPrint(e.toString());
+      }
+      
     }
 }
