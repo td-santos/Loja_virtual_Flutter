@@ -7,6 +7,7 @@ import 'package:virtual_store/models/home_manager.dart';
 import 'package:virtual_store/models/product.dart';
 import 'package:virtual_store/models/product_manager.dart';
 import 'package:virtual_store/models/user_manager.dart';
+import 'package:virtual_store/screens/address/address_screen.dart';
 import 'package:virtual_store/screens/base/base_screen.dart';
 import 'package:virtual_store/screens/cart/cart_screen.dart';
 import 'package:virtual_store/screens/edit_product/edit_product_screen.dart';
@@ -14,9 +15,11 @@ import 'package:virtual_store/screens/login/login_screen.dart';
 import 'package:virtual_store/screens/product_detail/product_screen.dart';
 import 'package:virtual_store/screens/select_product/select_product_screen.dart';
 import 'package:virtual_store/screens/signup/signup_screen.dart';
+import 'package:virtual_store/services/cep_aberto_service.dart';
 
 void main() async {
   runApp(MyApp());
+  CepAbertoService().getAdressFromCep('21.031-460').then((address) => print(address));
 
   //.add -> id unico no firebase
   //Firestore.instance.collection('pedidos').add({"preco": 199.99,"user": "Thiago"});
@@ -116,6 +119,9 @@ class MyApp extends StatelessWidget {
 
             case '/edit_product':
               return MaterialPageRoute(builder: (_) => EditProductScreen(settings.arguments as Product,));
+
+            case '/address':
+              return MaterialPageRoute(builder: (_) => AddressScreen());
 
             default:
               return MaterialPageRoute(builder: (_) => BaseScreen());
