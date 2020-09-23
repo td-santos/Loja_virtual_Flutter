@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:virtual_store/models/address.dart';
 import 'package:virtual_store/models/product.dart';
 import 'package:virtual_store/models/user.dart';
@@ -14,9 +15,10 @@ class CartManager extends ChangeNotifier{
     User user;
     Address address;
     num productsPrice = 0.0;
+    num deliveryPrice;
+    final Firestore firestore = Firestore.instance;
 
     void addToCart(Product product){
-
       try{
         final CartProduct e = items.firstWhere((p) => p.stackable(product));
         e.increment();
@@ -122,8 +124,41 @@ class CartManager extends ChangeNotifier{
       
     }
 
+    Future<void> setAddress(Address address)async{
+      this.address = address;
+      if(await calculateDelivery(address.lat, address.long)){
+        //Salvar end firebase
+        print('Price: $deliveryPrice');
+      }else{
+        return Future.error('Emdereço fora do raio de entrega :(');
+      }
+    }
+
     void removeAddress(){
       address = null;
       notifyListeners();
+    }
+
+    Future<bool> calculateDelivery(double lat, double long)async{
+      final DocumentSnapshot doc = await firestore.document('aux/delivery').get();
+      final latStore = doc.data['lat'] as double;
+      final longStore = doc.data['long'] as double;
+
+      final maxkm = doc.data['maxkm'] as num;// distancia max de entrega
+      final base = doc.data['base'] as num;//preco base
+      final km = doc.data['km'] as num;//preco porkm
+
+      double dis = await Geolocator().distanceBetween(latStore, longStore, lat, long);
+      dis = dis/1000.0;// convert in Km
+
+      print('Distancia: $dis');
+
+      deliveryPrice = base + dis * km;
+
+      if(dis > maxkm){
+        return false;
+      }else{
+        return true;
+      }
     }
 }
