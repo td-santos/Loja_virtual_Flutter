@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
                 actions: <Widget>[
                   IconButton(
                     icon: Icon(Icons.shopping_cart), 
-                    onPressed: ()=> Navigator.of(context).popAndPushNamed('/cart')
+                    onPressed: ()=> Navigator.of(context).pushNamed('/cart')
                   ),
                   Consumer2<UserManager,HomeManager>(
                     builder: (_,userManager,homeManager,__){

@@ -6,21 +6,32 @@ import 'package:virtual_store/common/custom_icon_buttom.dart';
 import 'package:virtual_store/models/address.dart';
 import 'package:virtual_store/models/cart_manager.dart';
 
-class CepInputField extends StatelessWidget {
-  final Address address;
-  final cepController = TextEditingController();
+class CepInputField extends StatefulWidget {
 
-  CepInputField({Key key, this.address}) : super(key: key);
+  final Address address; 
+  CepInputField({this.address}) ;    
+
+  @override
+  _CepInputFieldState createState() => _CepInputFieldState();
+}
+
+class _CepInputFieldState extends State<CepInputField> {
+
+  final TextEditingController cepController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final cartManager = context.watch<CartManager>();
 
-    if (address.zipCode == null) {
+    
+
+    if (widget.address.zipCode == null) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextFormField(
+            enabled: !cartManager.loading,
             controller: cepController,
             keyboardType: TextInputType.number,
             inputFormatters: [
@@ -39,17 +50,30 @@ class CepInputField extends StatelessWidget {
               }
             },
           ),
+          if(cartManager.loading)
+            LinearProgressIndicator(
+              valueColor: AlwaysStoppedAnimation(primaryColor),
+              backgroundColor: Colors.transparent,
+            ),
           RaisedButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               color: primaryColor,
               disabledColor: primaryColor.withAlpha(100),
               textColor: Colors.white,
-              onPressed: () {
+              onPressed: !cartManager.loading ?() async{
                 if (Form.of(context).validate()) {
-                  context.read<CartManager>().getAddress(cepController.text);
+                  try{
+                    await context.read<CartManager>().getAddress(cepController.text);
+                  }catch (e){
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text('$e'),
+                    backgroundColor: Colors.red,
+                  ));
+                  }
+                  
                 }
-              },
+              } : null,
               child: Text('Buscar Cep'))
         ],
       );
@@ -60,7 +84,7 @@ class CepInputField extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Text(
-                'CEP: ${address.zipCode}',
+                'CEP: ${widget.address.zipCode}',
                 style:
                     TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
               ),
