@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:virtual_store/models/admin_users_manager.dart';
 import 'package:virtual_store/models/cart_manager.dart';
 import 'package:virtual_store/models/home_manager.dart';
+import 'package:virtual_store/models/orders_manager.dart';
 import 'package:virtual_store/models/product.dart';
 import 'package:virtual_store/models/product_manager.dart';
 import 'package:virtual_store/models/user_manager.dart';
@@ -80,6 +81,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
           create: (_)=> AdminUsersManager(),
           update: (_, userManager,adminUsersManager) => adminUsersManager..updateUser(userManager),
+          lazy: false,
+        ),
+        ChangeNotifierProxyProvider<UserManager,OrdersManager>(
+          create: (_)=> OrdersManager(), 
+          update: (_, usermanager, ordersManager)=> ordersManager..updateUser(usermanager.user),
           lazy: false,
         )
       ],

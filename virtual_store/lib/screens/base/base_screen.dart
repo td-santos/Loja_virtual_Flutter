@@ -6,6 +6,7 @@ import 'package:virtual_store/models/user_manager.dart';
 import 'package:virtual_store/screens/admin_users/admin_users_screen.dart';
 import 'package:virtual_store/screens/home/home_screen.dart';
 import 'package:virtual_store/screens/login/login_screen.dart';
+import 'package:virtual_store/screens/orders/orders_screen.dart';
 import 'package:virtual_store/screens/products/products_screen.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -28,12 +29,7 @@ class _BaseScreenState extends State<BaseScreen> {
             children: <Widget>[
               HomeScreen(),
               ProductsScreen(),
-              Scaffold(
-                appBar: AppBar(
-                  title: Text('Home3'),
-                ),
-                drawer: CustomDrawer(),
-              ),
+              OrdersScreen(),
               Scaffold(
                 appBar: AppBar(
                   title: Text('Home4'),
