@@ -6,12 +6,11 @@ import 'package:virtual_store/models/product.dart';
 
 class CartProduct extends ChangeNotifier{
 
-  String id;
-
-  
+  String id;  
   String productId;
   int quantity;
   String size;
+  num fixedPrice;
 
   Product _product;
   Product get product => _product;
@@ -52,7 +51,8 @@ class CartProduct extends ChangeNotifier{
     return {
       'pid' : productId,
       'quantity' : quantity,
-      'size' : size
+      'size' : size,
+      'fixedPrice' : fixedPrice ?? unitPrice,
     };
   }
 
