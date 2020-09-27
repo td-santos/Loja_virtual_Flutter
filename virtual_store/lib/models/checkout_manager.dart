@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:virtual_store/models/cart_manager.dart';
+import 'package:virtual_store/models/order.dart';
 import 'package:virtual_store/models/product.dart';
 
 class CheckoutManager extends ChangeNotifier {
@@ -19,10 +20,15 @@ class CheckoutManager extends ChangeNotifier {
       await _decrementStock();
     } catch (e) {
       onStockFail(e);
-      debugPrint(e.toString());
+      return;
     }
 
-    _getOrderId().then((value) => print(value));
+    // TODO: PROCESSAR PG
+
+    final orderId = await _getOrderId();
+    final order = Order.fromcartManager(cartManager);
+    order.orderId = orderId.toString();
+    order.save();
   }
 
   Future<int> _getOrderId() async {
