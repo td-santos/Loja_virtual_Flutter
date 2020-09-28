@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:virtual_store/models/admin_users_manager.dart';
 import 'package:virtual_store/models/cart_manager.dart';
 import 'package:virtual_store/models/home_manager.dart';
+import 'package:virtual_store/models/order.dart';
 import 'package:virtual_store/models/orders_manager.dart';
 import 'package:virtual_store/models/product.dart';
 import 'package:virtual_store/models/product_manager.dart';
@@ -12,6 +13,7 @@ import 'package:virtual_store/screens/address/address_screen.dart';
 import 'package:virtual_store/screens/base/base_screen.dart';
 import 'package:virtual_store/screens/cart/cart_screen.dart';
 import 'package:virtual_store/screens/checkout/checkout_screen.dart';
+import 'package:virtual_store/screens/confirmation/confirmation_screen.dart';
 import 'package:virtual_store/screens/edit_product/edit_product_screen.dart';
 import 'package:virtual_store/screens/login/login_screen.dart';
 import 'package:virtual_store/screens/product_detail/product_screen.dart';
@@ -131,6 +133,9 @@ class MyApp extends StatelessWidget {
 
             case '/checkout':
               return MaterialPageRoute(builder: (_) => CheckoutScreen());
+
+            case '/confirmation':
+              return MaterialPageRoute(builder: (_) => ConfirmationScreen(order: settings.arguments as Order,));
 
             //case '/base':
             default:
